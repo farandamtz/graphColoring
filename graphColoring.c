@@ -8,7 +8,7 @@
 
 struct Nodo* createNode(int destino);
 struct Grafo* createGraph(int V);
-void agregarArista(struct Grafo* grafo, int origen, int destino);
+void addEdge(struct Grafo* grafo, int origen, int destino);
 void imprimirGrafo(struct Grafo* grafo);
 void destruirGrafo(struct Grafo* grafo);
 int coloreadoGrafos(struct Grafo* grafo);
@@ -50,7 +50,7 @@ struct Grafo* createGraph(int V){
     return grafo;
 }
 
-void agregarArista(struct Grafo* grafo, int origen, int destino){
+void addEdge(struct Grafo* grafo, int origen, int destino){
     struct Nodo* nuevoNodo=createNode(destino);
     nuevoNodo->siguiente=grafo->arr[origen].cabeza;
     grafo->arr[origen].cabeza=nuevoNodo;
@@ -122,22 +122,22 @@ void imprimirSolucion(int V, int colores[]){
 
 struct Grafo* crearGrafoManual(int V){
     struct Grafo* grafo=createGraph(V);
-    agregarArista(grafo, 0, 1);
-    agregarArista(grafo, 0, 4);
-    agregarArista(grafo, 1, 2);
-    agregarArista(grafo, 1, 3);
-    agregarArista(grafo, 1, 4);
-    agregarArista(grafo, 2, 3);
-    agregarArista(grafo, 3, 4);
-    agregarArista(grafo, 4, 5);
-    agregarArista(grafo, 4, 6);
-    agregarArista(grafo, 2, 6);
-    agregarArista(grafo, 3, 5);
-    agregarArista(grafo, 2, 7);
-    agregarArista(grafo, 5, 8);
-    agregarArista(grafo, 7, 8);
-    agregarArista(grafo, 6, 9);
-    agregarArista(grafo, 8, 9);
+    addEdge(grafo, 0, 1);
+    addEdge(grafo, 0, 4);
+    addEdge(grafo, 1, 2);
+    addEdge(grafo, 1, 3);
+    addEdge(grafo, 1, 4);
+    addEdge(grafo, 2, 3);
+    addEdge(grafo, 3, 4);
+    addEdge(grafo, 4, 5);
+    addEdge(grafo, 4, 6);
+    addEdge(grafo, 2, 6);
+    addEdge(grafo, 3, 5);
+    addEdge(grafo, 2, 7);
+    addEdge(grafo, 5, 8);
+    addEdge(grafo, 7, 8);
+    addEdge(grafo, 6, 9);
+    addEdge(grafo, 8, 9);
     return(grafo);
 }
 
@@ -149,7 +149,7 @@ struct Grafo* crearGrafoAleatorio(int V, int E){
         destino=rand()%V;
         while(origen==destino)
             destino=rand()%V;
-        agregarArista(grafo, origen, destino);
+        addEdge(grafo, origen, destino);
     }
     return grafo;
 }
