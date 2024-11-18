@@ -9,16 +9,16 @@
 struct Nodo* createNode(int destino);
 struct Grafo* createGraph(int V);
 void addEdge(struct Grafo* grafo, int origen, int destino);
-void imprimirGrafo(struct Grafo* grafo);
-void destruirGrafo(struct Grafo* grafo);
-int coloreadoGrafos(struct Grafo* grafo);
-void imprimirSolucion(int V, int colores[]);
-struct Grafo* crearGrafoManual(int V);
-struct Grafo* crearGrafoAleatorio(int V, int E);
-void probarGrafoManual();
-void probarConDiezVertices();
-void probarConCienVertices();
-void probarConMIlVertices();
+void printGraph(struct Grafo* grafo);
+void eraseGraph(struct Grafo* grafo);
+int graphColoring(struct Grafo* grafo);
+void printSolution(int V, int colores[]);
+struct Grafo* createGraphManually(int V);
+struct Grafo* createRandomGraph(int V, int E);
+void tryManualGraph();
+void try10Vertices();
+void try100Vertices();
+void try1000Vertices();
 
 struct Nodo{
     int destino;
@@ -59,7 +59,7 @@ void addEdge(struct Grafo* grafo, int origen, int destino){
     grafo->arr[destino].cabeza=nuevoNodo;
 }
 
-void imprimirGrafo(struct Grafo* grafo){
+void printGraph(struct Grafo* grafo){
     for(int i=0; i<grafo->vertices; i++){
         struct Nodo* recorrido=grafo->arr[i].cabeza;
         printf("\nAristas del vertice %d\n%d", i, i);
@@ -71,11 +71,11 @@ void imprimirGrafo(struct Grafo* grafo){
     }
 }
 
-void destruirGrafo(struct Grafo* grafo){
+void eraseGraph(struct Grafo* grafo){
     free(grafo);
 }
 
-int coloreadoGrafos(struct Grafo* grafo){
+int graphColoring(struct Grafo* grafo){
     int V=grafo->vertices, colores[V], coloresUsados=-1;
     bool disponibilidad[V];
     for(int a=0; a<V; a++)
@@ -111,16 +111,16 @@ int coloreadoGrafos(struct Grafo* grafo){
         if(colores[m]>coloresUsados)
             coloresUsados=colores[m];
     }
-    imprimirSolucion(V, colores);
+    printSolution(V, colores);
     return(coloresUsados+1);
 }
 
-void imprimirSolucion(int V, int colores[]){
+void printSolution(int V, int colores[]){
     for(int i=0; i<V; i++)
         printf("Vertice %d -> color %d\n", i, colores[i]);
 }
 
-struct Grafo* crearGrafoManual(int V){
+struct Grafo* createGraphManually(int V){
     struct Grafo* grafo=createGraph(V);
     addEdge(grafo, 0, 1);
     addEdge(grafo, 0, 4);
@@ -141,7 +141,7 @@ struct Grafo* crearGrafoManual(int V){
     return(grafo);
 }
 
-struct Grafo* crearGrafoAleatorio(int V, int E){
+struct Grafo* createRandomGraph(int V, int E){
     struct Grafo* grafo=createGraph(V);
     int origen, destino;
     for(int i=0; i<E;i++){
@@ -154,55 +154,55 @@ struct Grafo* crearGrafoAleatorio(int V, int E){
     return grafo;
 }
 
-void probarGrafoManual(){
+void tryManualGraph(){
     int V=10, coloresUsados=0;
-    struct Grafo* grafo=crearGrafoManual(10);
-    imprimirGrafo(grafo);
+    struct Grafo* grafo=createGraphManually(10);
+    printGraph(grafo);
     printf("\nGrafo con %d vertices\n", V);
-    coloresUsados=coloreadoGrafos(grafo);
+    coloresUsados=graphColoring(grafo);
     printf("\nColores usados: %d\n", coloresUsados);
-    destruirGrafo(grafo);
+    eraseGraph(grafo);
 }
 
-void probarConDiezVertices(){
+void try10Vertices(){
     int V=10, E=40, coloresUsados=0;
     struct Grafo* grafo=createGraph(V);
-    grafo=crearGrafoAleatorio(V, E);
-    imprimirGrafo(grafo);
+    grafo=createRandomGraph(V, E);
+    printGraph(grafo);
     printf("\nGrafo con %d vertices y %d aristas\n", V, E);
-    coloresUsados=coloreadoGrafos(grafo);
+    coloresUsados=graphColoring(grafo);
     printf("\nColores usados: %d\n", coloresUsados);
-    destruirGrafo(grafo);
+    eraseGraph(grafo);
 }
 
-void probarConCienVertices(){
+void try100Vertices(){
     int V=100, E=190, coloresUsados=0;
     struct Grafo* grafo=createGraph(V);
-    grafo=crearGrafoAleatorio(V, E);
-    imprimirGrafo(grafo);
+    grafo=createRandomGraph(V, E);
+    printGraph(grafo);
     printf("\nGrafo con %d vertices y %d aristas\n", V, E);
-    coloresUsados=coloreadoGrafos(grafo);
+    coloresUsados=graphColoring(grafo);
     printf("\nColores usados: %d\n", coloresUsados);
-    destruirGrafo(grafo);
+    eraseGraph(grafo);
 }
 
-void probarConMilVertices(){
+void try1000Vertices(){
     int V=1000, E=2500, coloresUsados=0;
     struct Grafo* grafo=createGraph(V);
-    grafo=crearGrafoAleatorio(V, E);
-    imprimirGrafo(grafo);
+    grafo=createRandomGraph(V, E);
+    printGraph(grafo);
     printf("\nGrafo con %d vertices y %d aristas\n", V, E);
-    coloresUsados=coloreadoGrafos(grafo);
+    coloresUsados=graphColoring(grafo);
     printf("\nColores usados: %d\n", coloresUsados);
-    destruirGrafo(grafo);
+    eraseGraph(grafo);
 }
 
 int main(){
     srand(time(0));
     printf("\n************COLOREADO DE GRAFOS************\n");
-    //probarConDiezVertices();
-    //probarConCienVertices();
-    probarConMilVertices();
-    //probarGrafoManual();
+    //try10Vertices();
+    //try100Vertices();
+    try1000Vertices();
+    //tryManualGraph();
     return 0;
 }
